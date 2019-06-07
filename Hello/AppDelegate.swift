@@ -13,9 +13,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        window = UIWindow()
+        
+//        Auth.auth.currentUser = nil
+        
+        if Auth.auth.currentUser == nil {
+            guard let signUpVC = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController() else { return false }
+            let nav = UINavigationController(rootViewController: signUpVC)
+//            nav.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//            nav.navigationBar.shadowImage = UIImage()
+            nav.isNavigationBarHidden = true
+            window?.rootViewController = nav
+        } else {
+            guard let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() else { return false }
+            window?.rootViewController = mainVC
+        }
+        
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
